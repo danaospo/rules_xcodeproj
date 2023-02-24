@@ -24,7 +24,7 @@
         "//iOSApp/Test/UITests:iOSAppUITests_macro.__internal__.__test_bundle applebin_ios-ios_x86_64-dbg-STABLE-3",
         {}
     ],
-    "R": "//test/fixtures:xcodeproj_bwb",
+    "R": "@//test/fixtures:xcodeproj_bwb",
     "T": "fixture-target-ids-file",
     "a": [
         "//iOSApp/Test/SwiftUnitTests:iOSAppSwiftUnitTestSuite.__internal__.__test_bundle applebin_ios-ios_x86_64-dbg-STABLE-3",
