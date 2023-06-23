@@ -134,7 +134,8 @@ def _write_generator_defz_bzl(
         is_fixture,
         name,
         repo,
-        template):
+        template,
+        use_incremental):
     output = actions.declare_file("{}.generator.defs.bzl".format(name))
 
     build_mode = attr.build_mode
@@ -150,21 +151,21 @@ def _write_generator_defz_bzl(
         """\
 # buildifier: disable=bzl-visibility
 load(
-    "{repo}//xcodeproj/internal:xcodeproj_aspect.bzl",
+    "{repo}//xcodeproj/internal{maybe_cat}:xcodeproj_aspect.bzl",
     "make_xcodeproj_aspect",
 )
 
 # buildifier: disable=bzl-visibility
 load(
-    "{repo}//xcodeproj/internal:xcodeproj_rule.bzl",
+    "{repo}//xcodeproj/internal{maybe_cat}:xcodeproj_rule.bzl",
     "make_xcodeproj_rule",
 )
 
 # buildifier: disable=bzl-visibility
 load(
-    "{repo}//xcodeproj/internal:xcodeproj_transitions.bzl",
+    "{repo}//xcodeproj/internal{maybe_cat}:xcodeproj_transitions.bzl",
     "make_xcodeproj_target_transitions",
-)""".format(repo = repo),
+)""".format(repo = repo, maybe_cat = "/cat" if use_incremental else ""),
     ]
     if is_fixture:
         loads.append("""\
@@ -464,6 +465,7 @@ def _xcodeproj_runner_impl(ctx):
         name = name,
         repo = repo,
         template = ctx.file._generator_defs_bzl_template,
+        use_incremental = ctx.attr.use_incremental,
     )
 
     runner = _write_runner(
@@ -563,6 +565,9 @@ xcodeproj_runner = rule(
             default = [],
         ),
         "unowned_extra_files": attr.string_list(),
+        "use_incremental": attr.bool(
+            mandatory = True,
+        ),
         "xcode_configuration_flags": attr.string_list(
             mandatory = True,
         ),

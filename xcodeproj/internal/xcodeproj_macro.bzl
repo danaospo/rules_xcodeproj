@@ -490,6 +490,8 @@ Please refer to https://bazel.build/extending/config#defining) on how to them.
             normalized_xcode_configurations[configuration]
         )
 
+    use_incremental = kwargs.pop("use_experimental_incremental", False)
+
     xcodeproj_runner(
         name = name,
         adjust_schemes_for_swiftui_previews = (
@@ -522,6 +524,7 @@ Please refer to https://bazel.build/extending/config#defining) on how to them.
         tvos_simulator_cpus = tvos_simulator_cpus,
         unfocused_targets = unfocused_targets,
         unowned_extra_files = unowned_extra_files,
+        use_incremental = use_incremental,
         watchos_device_cpus = watchos_device_cpus,
         watchos_simulator_cpus = watchos_simulator_cpus,
         xcode_configuration_flags = xcode_configuration_flags,
