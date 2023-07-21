@@ -14,8 +14,18 @@ final class InnerIdentifyTargetsTests: XCTestCase {
                 target: ConsolidatedTarget(
                     ["B", "A"],
                     allTargets: [
-                        .mock(id: "B", dependencies: ["C"]),
-                        .mock(id: "A", dependencies: ["C"]),
+                        .mock(
+                            id: "B",
+                            label: "@repo//some:AB",
+                            productType: .application,
+                            dependencies: ["C"]
+                        ),
+                        .mock(
+                            id: "A",
+                            label: "@repo//some:AB",
+                            productType: .application,
+                            dependencies: ["C"]
+                        ),
                     ]
                 )
             ),
@@ -24,7 +34,11 @@ final class InnerIdentifyTargetsTests: XCTestCase {
                 target: ConsolidatedTarget(
                     ["C"],
                     allTargets: [
-                        .mock(id: "C"),
+                        .mock(
+                            id: "C",
+                            label: "//:C",
+                            productType: .extensionKitExtension
+                        ),
                     ]
                 )
             ),
@@ -51,9 +65,11 @@ final class InnerIdentifyTargetsTests: XCTestCase {
         ]
 
         let expectedIdentifiedTargets: [IdentifiedTarget] = [
-            .mock(
+            .init(
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/A"),
                 key: ["A", "B"],
+                label: "@repo//some:AB",
+                productType: .application,
                 name: "AB (macOS)",
                 identifier: .init(
                     pbxProjEscapedName: "AB (macOS)".pbxProjEscaped,
@@ -65,9 +81,11 @@ final class InnerIdentifyTargetsTests: XCTestCase {
                     "C",
                 ]
             ),
-            .mock(
+            .init(
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/C"),
                 key: ["C"],
+                label: "//:C",
+                productType: .extensionKitExtension,
                 name: "c (iOS)",
                 identifier: .init(
                     pbxProjEscapedName: "c (iOS)".pbxProjEscaped,

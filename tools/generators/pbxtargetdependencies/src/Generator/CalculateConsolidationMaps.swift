@@ -55,6 +55,8 @@ extension Generator.CalculateConsolidationMaps {
                 .append(
                     ConsolidationMapEntry(
                         key: target.key,
+                        label: target.label,
+                        productType: target.productType,
                         name: target.name,
                         subIdentifier: identifier.subIdentifier,
                         dependencySubIdentifiers: depSubIdentifiers

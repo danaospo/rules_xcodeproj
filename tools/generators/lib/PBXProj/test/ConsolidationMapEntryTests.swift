@@ -10,7 +10,10 @@ final class ConsolidationMapEntryTests: XCTestCase {
         let input: [ConsolidationMapEntry] = [
             .init(
                 key: .init(["CCCCC"]),
+                label: "@//:CCCCC",
+                productType: .commandLineTool,
                 name: "Disambiguated 3 (Name)",
+                uiTestHostName: nil,
                 subIdentifier: .init(shard: "42", hash: "18270012"),
                 dependencySubIdentifiers: [
                     .init(shard: "02", hash: "00234561"),
@@ -19,13 +22,19 @@ final class ConsolidationMapEntryTests: XCTestCase {
             ),
             .init(
                 key: .init(["@A//:a 1234", "@B//:b 4356", "DDDD"]),
+                label: "@//package:a",
+                productType: .uiTestBundle,
                 name: "Disambiguated 2",
+                uiTestHostName: "Disambiguated 3 (Name)",
                 subIdentifier: .init(shard: "01", hash: "12345678"),
                 dependencySubIdentifiers: []
             ),
             .init(
                 key: .init(["A", "C"]),
+                label: "@repo//:C",
+                productType: .staticLibrary,
                 name: "Disambiguated",
+                uiTestHostName: nil,
                 subIdentifier: .init(shard: "00", hash: "00000000"),
                 dependencySubIdentifiers: [
                     .init(shard: "44", hash: "00000000"),
@@ -38,7 +47,7 @@ final class ConsolidationMapEntryTests: XCTestCase {
 
         // Act
 
-        try ConsolidationMapEntry.encode(entires: input, to: file)
+        try ConsolidationMapEntry.encode(input, to: file)
         let output = try await ConsolidationMapEntry.decode(from: file)
 
         // Assert

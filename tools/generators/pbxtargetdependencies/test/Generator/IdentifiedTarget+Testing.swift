@@ -7,6 +7,8 @@ extension IdentifiedTarget {
     static func mock(
         consolidationMapOutputPath: URL = URL(fileURLWithPath: "/tmp/out"),
         key: ConsolidatedTarget.Key,
+        label: BazelLabel = "//some:target",
+        productType: PBXProductType = .staticLibrary,
         name: String = "T",
         identifier: Identifiers.Targets.Identifier = .init(
             pbxProjEscapedName: "T",
@@ -19,6 +21,8 @@ extension IdentifiedTarget {
         return Self(
             consolidationMapOutputPath: consolidationMapOutputPath,
             key: key,
+            label: label,
+            productType: productType,
             name: name,
             identifier: identifier,
             dependencies: dependencies

@@ -66,6 +66,8 @@ extension Generator.InnerIdentifyTargets {
                 IdentifiedTarget(
                     consolidationMapOutputPath: outputPath,
                     key: disambiguatedTarget.target.key,
+                    label: disambiguatedTarget.target.label,
+                    productType: disambiguatedTarget.target.productType,
                     name: disambiguatedTarget.name,
                     identifier: identifier,
                     dependencies: aTarget.dependencies

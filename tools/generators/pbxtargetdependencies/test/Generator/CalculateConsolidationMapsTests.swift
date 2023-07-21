@@ -12,6 +12,8 @@ final class CalculateConsolidationMapsTests: XCTestCase {
             .mock(
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/1"),
                 key: ["B"],
+                label: "@//:B",
+                productType: .bundle,
                 name: "b",
                 identifier: .init(
                     pbxProjEscapedName: "b escaped",
@@ -24,6 +26,8 @@ final class CalculateConsolidationMapsTests: XCTestCase {
             .mock(
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/0"),
                 key: ["A"],
+                label: "@repo//:A",
+                productType: .application,
                 name: "AA",
                 identifier: .init(
                     pbxProjEscapedName: "AA escaped",
@@ -36,6 +40,8 @@ final class CalculateConsolidationMapsTests: XCTestCase {
             .mock(
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/1"),
                 key: ["C"],
+                label: "@//package/path:C",
+                productType: .dynamicLibrary,
                 name: "C",
                 identifier: .init(
                     pbxProjEscapedName: "C escaped",
@@ -56,6 +62,8 @@ final class CalculateConsolidationMapsTests: XCTestCase {
             URL(fileURLWithPath: "/tmp/1"): [
                 .init(
                     key: ["B"],
+                    label: "@//:B",
+                    productType: .bundle,
                     name: "b",
                     subIdentifier: .init(shard: "42", hash: "12345678"),
                     dependencySubIdentifiers: [
@@ -64,6 +72,8 @@ final class CalculateConsolidationMapsTests: XCTestCase {
                 ),
                 .init(
                     key: ["C"],
+                    label: "@//package/path:C",
+                    productType: .dynamicLibrary,
                     name: "C",
                     subIdentifier: .init(shard: "10", hash: "FFFFFFFF"),
                     dependencySubIdentifiers: [
@@ -74,6 +84,8 @@ final class CalculateConsolidationMapsTests: XCTestCase {
             URL(fileURLWithPath: "/tmp/0"): [
                 .init(
                     key: ["A"],
+                    label: "@repo//:A",
+                    productType: .application,
                     name: "AA",
                     subIdentifier: .init(shard: "07", hash: "11111111"),
                     dependencySubIdentifiers: [
