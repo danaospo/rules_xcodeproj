@@ -10,5 +10,6 @@ struct Target: Equatable {
     let osVersion: SemanticVersion
     let arch: String
     let moduleName: String
+    let uiTestHost: TargetID?
     let dependencies: [TargetID]
 }

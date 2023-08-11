@@ -10,6 +10,7 @@ extension IdentifiedTarget {
         label: BazelLabel = "//some:target",
         productType: PBXProductType = .staticLibrary,
         name: String = "T",
+        uiTestHostName: String? = nil,
         identifier: Identifiers.Targets.Identifier = .init(
             pbxProjEscapedName: "T",
             subIdentifier: .init(shard: "00", hash: "00000000"),
@@ -24,6 +25,7 @@ extension IdentifiedTarget {
             label: label,
             productType: productType,
             name: name,
+            uiTestHostName: uiTestHostName,
             identifier: identifier,
             dependencies: dependencies
         )

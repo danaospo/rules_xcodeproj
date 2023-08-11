@@ -8,6 +8,7 @@ struct IdentifiedTarget: Equatable {
     let label: BazelLabel
     let productType: PBXProductType
     let name: String
+    let uiTestHostName: String?
     let identifier: Identifiers.Targets.Identifier
     let dependencies: [TargetID]
 }

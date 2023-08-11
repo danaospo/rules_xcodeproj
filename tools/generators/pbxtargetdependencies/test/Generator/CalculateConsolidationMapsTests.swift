@@ -13,8 +13,9 @@ final class CalculateConsolidationMapsTests: XCTestCase {
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/1"),
                 key: ["B"],
                 label: "@//:B",
-                productType: .bundle,
+                productType: .uiTestBundle,
                 name: "b",
+                uiTestHostName: "AA",
                 identifier: .init(
                     pbxProjEscapedName: "b escaped",
                     subIdentifier: .init(shard: "42", hash: "12345678"),
@@ -63,8 +64,9 @@ final class CalculateConsolidationMapsTests: XCTestCase {
                 .init(
                     key: ["B"],
                     label: "@//:B",
-                    productType: .bundle,
+                    productType: .uiTestBundle,
                     name: "b",
+                    uiTestHostName: "AA",
                     subIdentifier: .init(shard: "42", hash: "12345678"),
                     dependencySubIdentifiers: [
                         .bazelDependencies,
@@ -75,6 +77,7 @@ final class CalculateConsolidationMapsTests: XCTestCase {
                     label: "@//package/path:C",
                     productType: .dynamicLibrary,
                     name: "C",
+                    uiTestHostName: nil,
                     subIdentifier: .init(shard: "10", hash: "FFFFFFFF"),
                     dependencySubIdentifiers: [
                         .bazelDependencies,
@@ -87,6 +90,7 @@ final class CalculateConsolidationMapsTests: XCTestCase {
                     label: "@repo//:A",
                     productType: .application,
                     name: "AA",
+                    uiTestHostName: nil,
                     subIdentifier: .init(shard: "07", hash: "11111111"),
                     dependencySubIdentifiers: [
                         .bazelDependencies,

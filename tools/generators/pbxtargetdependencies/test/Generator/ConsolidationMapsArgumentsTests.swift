@@ -1,4 +1,5 @@
 import CustomDump
+import PBXProj
 import XCTest
 
 @testable import pbxtargetdependencies
@@ -46,7 +47,7 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
 
             "--product-types",
             "T",
-            "u",
+            "U",
             "u",
             "L",
 
@@ -94,6 +95,12 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
             "@com_github_michaeleisel_zippyjson//:ZippyJSON macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
             "@com_github_tuist_xcodeproj//:XcodeProj macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
         ])
+        let testHosts: [TargetID: TargetID] = [
+            "//tools/generators/legacy/test:tests.__internal__.__test_bundle applebin_macos-darwin_x86_64-dbg-STABLE-3": 
+                "//tools/generators/legacy:generator applebin_macos-darwin_x86_64-dbg-STABLE-3",
+            "//tools/generators/legacy/test:tests.__internal__.__test_bundle applebin_macos-darwin_x86_64-dbg-STABLE-4": 
+                "//tools/generators/legacy:generator applebin_macos-darwin_x86_64-dbg-STABLE-4",
+        ]
 
         let expectedConsolidationMapArguments: [ConsolidationMapArguments] = [
             .init(
@@ -111,6 +118,7 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
                         osVersion: "12.0",
                         arch: "x86_64",
                         moduleName: "",
+                        uiTestHost: nil,
                         dependencies: [
                             "//tools/generators/legacy:generator.library macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
                         ]
@@ -119,11 +127,12 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
                         id: "//tools/generators/legacy/test:tests.__internal__.__test_bundle applebin_macos-darwin_x86_64-dbg-STABLE-3",
                         label: "//tools/generators/legacy/test:tests.__internal__.__test_bundle",
                         xcodeConfigurations: ["Debug"],
-                        productType: .unitTestBundle,
+                        productType: .uiTestBundle,
                         platform: .macOS,
                         osVersion: "16.0",
                         arch: "arm64",
                         moduleName: "tests",
+                        uiTestHost: "//tools/generators/legacy:generator applebin_macos-darwin_x86_64-dbg-STABLE-3",
                         dependencies: [
                             "//tools/generators/legacy:generator.library macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
                             "//tools/generators/lib/GeneratorCommon:GeneratorCommon macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
@@ -139,6 +148,7 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
                         osVersion: "16.2.1",
                         arch: "arm64",
                         moduleName: "tests",
+                        uiTestHost: nil,
                         dependencies: [
                             "//tools/generators/legacy:generator.library macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-2",
                             "//tools/generators/lib/GeneratorCommon:GeneratorCommon macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-2",
@@ -162,6 +172,7 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
                         osVersion: "9.1",
                         arch: "i386",
                         moduleName: "generator",
+                        uiTestHost: nil,
                         dependencies: [
                             "//tools/generators/lib/GeneratorCommon:GeneratorCommon macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
                             "@com_github_apple_swift_collections//:OrderedCollections macos-x86_64-min12.0-applebin_macos-darwin_x86_64-dbg-STABLE-1",
@@ -176,7 +187,8 @@ final class ConsolidationMapsArgumentsTests: XCTestCase {
 
         // Act
 
-        let consolidationMapArguments = arguments.toConsolidationMapArguments()
+        let consolidationMapArguments = try arguments
+            .toConsolidationMapArguments(testHosts: testHosts)
 
         // Assert
 

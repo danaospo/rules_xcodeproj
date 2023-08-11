@@ -37,7 +37,8 @@ final class InnerIdentifyTargetsTests: XCTestCase {
                         .mock(
                             id: "C",
                             label: "//:C",
-                            productType: .extensionKitExtension
+                            productType: .uiTestBundle,
+                            uiTestHost: "B"
                         ),
                     ]
                 )
@@ -71,6 +72,7 @@ final class InnerIdentifyTargetsTests: XCTestCase {
                 label: "@repo//some:AB",
                 productType: .application,
                 name: "AB (macOS)",
+                uiTestHostName: nil,
                 identifier: .init(
                     pbxProjEscapedName: "AB (macOS)".pbxProjEscaped,
                     subIdentifier: .init(shard: "AB_SHARD", hash: "AB_HASH"),
@@ -85,8 +87,9 @@ final class InnerIdentifyTargetsTests: XCTestCase {
                 consolidationMapOutputPath: URL(fileURLWithPath: "/tmp/C"),
                 key: ["C"],
                 label: "//:C",
-                productType: .extensionKitExtension,
+                productType: .uiTestBundle,
                 name: "c (iOS)",
+                uiTestHostName: "AB (macOS)",
                 identifier: .init(
                     pbxProjEscapedName: "c (iOS)".pbxProjEscaped,
                     subIdentifier: .init(shard: "C_SHARD", hash: "C_HASH"),

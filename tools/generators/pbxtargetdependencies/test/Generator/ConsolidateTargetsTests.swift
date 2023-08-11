@@ -713,6 +713,7 @@ extension Target {
         osVersion: SemanticVersion = "12.0",
         arch: String = "arm64",
         moduleName: String = "",
+        uiTestHost: TargetID? = nil,
         dependencies: [TargetID] = []
     ) -> Self {
         return Self(
@@ -724,6 +725,7 @@ extension Target {
             osVersion: osVersion,
             arch: arch,
             moduleName: moduleName,
+            uiTestHost: uiTestHost,
             dependencies: dependencies
         )
     }

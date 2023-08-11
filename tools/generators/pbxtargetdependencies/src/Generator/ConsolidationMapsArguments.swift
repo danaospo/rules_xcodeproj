@@ -261,7 +261,9 @@ struct ConsolidationMapArguments: Equatable {
 }
 
 extension ConsolidationMapsArguments {
-    func toConsolidationMapArguments() -> [ConsolidationMapArguments] {
+    func toConsolidationMapArguments(
+        testHosts: [TargetID: TargetID]
+    ) throws -> [ConsolidationMapArguments] {
         var dependenciesStartIndex = dependencies.startIndex
         var labelsStartIndex = labels.startIndex
         var targetsStartIndex = targets.startIndex
@@ -299,9 +301,20 @@ extension ConsolidationMapsArguments {
                         startIndex: &xcodeConfigurationsStartIndex
                     )
 
+                    let id = targets[targetIndex]
+                    let productType = productTypes[targetIndex]
+
+                    let uiTestHost: TargetID?
+                    if productType == .uiTestBundle {
+                        uiTestHost = try testHosts
+                            .value(for: id, context: "UI test")
+                    } else {
+                        uiTestHost = nil
+                    }
+
                     targetArguments.append(
                         .init(
-                            id: targets[targetIndex],
+                            id: id,
                             label: label,
                             xcodeConfigurations: xcodeConfigurations,
                             productType: productTypes[targetIndex],
@@ -309,6 +322,7 @@ extension ConsolidationMapsArguments {
                             osVersion: osVersions[targetIndex],
                             arch: archs[targetIndex],
                             moduleName: moduleNames[targetIndex],
+                            uiTestHost: uiTestHost,
                             dependencies: dependencies
                         )
                     )

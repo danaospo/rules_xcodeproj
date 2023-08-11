@@ -58,6 +58,7 @@ extension Generator.CalculateConsolidationMaps {
                         label: target.label,
                         productType: target.productType,
                         name: target.name,
+                        uiTestHostName: target.uiTestHostName,
                         subIdentifier: identifier.subIdentifier,
                         dependencySubIdentifiers: depSubIdentifiers
                     )
