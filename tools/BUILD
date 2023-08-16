@@ -4,6 +4,7 @@ load("//xcodeproj:defs.bzl", "xcode_schemes", "xcodeproj")
 load("//xcodeproj/internal:collections.bzl", "flatten", "uniq")
 
 _TOOLS = {
+    "compiler_build_settings": "//tools/generators/compiler_build_settings",
     "files_and_groups": "//tools/generators/files_and_groups",
     "pbxproj_prefix": "//tools/generators/pbxproj_prefix",
     "pbxtargetdependencies": "//tools/generators/pbxtargetdependencies",
@@ -11,6 +12,9 @@ _TOOLS = {
 }
 
 _TESTS = {
+    "compiler_build_settings": [
+        "//tools/generators/compiler_build_settings:compiler_build_settings_tests",
+    ],
     "files_and_groups": [
         "//tools/generators/lib/PBXProj:PBXProjTests",
         "//tools/generators/files_and_groups:files_and_groups_tests",
@@ -32,6 +36,110 @@ _SCHEME_DIAGNOSTICS = xcode_schemes.diagnostics(
 )
 
 _SCHEMES = [
+    xcode_schemes.scheme(
+        name = "compiler_build_settings",
+        launch_action = xcode_schemes.launch_action(
+            _TOOLS["compiler_build_settings"],
+            args = [
+                # outputPath
+                "/tmp/pbxproj_partials/compiler_build_settings",
+                # buildMode
+                "bazel",
+                # packageBinDir
+                "bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/Lib",
+                # args
+                "-target",
+                "arm64_32-apple-watchos7.0",
+                "-sdk",
+                "__BAZEL_XCODE_SDKROOT__",
+                "-debug-prefix-map",
+                "__BAZEL_XCODE_DEVELOPER_DIR__=DEVELOPER_DIR",
+                "-file-prefix-map",
+                "__BAZEL_XCODE_DEVELOPER_DIR__=DEVELOPER_DIR",
+                "-emit-object",
+                "-output-file-map",
+                "bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/Lib/Lib.output_file_map.json",
+                "-Xfrontend",
+                "-no-clang-module-breadcrumbs",
+                "-swift-version",
+                "4.2",
+                "-emit-module-path",
+                "bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/Lib/Lib.swiftmodule",
+                "-emit-objc-header-path",
+                "bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/Lib/generated/Lib-Swift.h",
+                "-enable-bare-slash-regex",
+                "-DNDEBUG",
+                "-O",
+                "-whole-module-optimization",
+                "-Xfrontend",
+                "-no-serialize-debugging-options",
+                "-g",
+                "-Xwrapped-swift=-debug-prefix-pwd-is-dot",
+                "-Xwrapped-swift=-file-prefix-pwd-is-dot",
+                "-module-cache-path bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/_swift_module_cache",
+                "-Fexternal/_main~non_module_deps~com_github_krzyzanowskim_cryptoswift/CryptoSwift.xcframework/watchos-arm64_32_armv7k",
+                "-Xcc",
+                "-Fexternal/_main~non_module_deps~com_github_krzyzanowskim_cryptoswift/CryptoSwift.xcframework/watchos-arm64_32_armv7k -Xcc",
+                "-iquoteexternal/_main~non_module_deps~com_github_krzyzanowskim_cryptoswift",
+                "-Xcc",
+                "-iquotebazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/external/_main~non_module_deps~com_github_krzyzanowskim_cryptoswift",
+                "-Xcc",
+                "-iquote.",
+                "-Xcc",
+                "-iquotebazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin",
+                "-Xcc",
+                "-fmodule-map-file=external/_main~non_module_deps~com_github_krzyzanowskim_cryptoswift/CryptoSwift.xcframework/watchos-arm64_32_armv7k/CryptoSwift.framework/Modules/module.modulemap",
+                "-Xfrontend",
+                "-color-diagnostics",
+                "-num-threads 12",
+                "-module-name",
+                "Lib",
+                "-Xwrapped-swift=-global-index-store-import-path=bazel-out/_global_index_store",
+                "-index-store-path",
+                "bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/Lib/Lib.indexstore",
+                "-Xfrontend",
+                "-disable-autolink-framework",
+                "-Xfrontend",
+                "CryptoSwift",
+                "-Xfrontend",
+                "-vfsoverlay",
+                "-Xfrontend",
+                "project/relative/overlay.yaml",
+                "-Xcc",
+                "-ivfsoverlay=external/overlay.yaml",
+                "-vfsoverlay",
+                "bazel-out/generated/overlay.yaml",
+                "-Xfrontend",
+                "-explicit-swift-module-map-file",
+                "-Xfrontend",
+                "bazel-out/generated/map.json",
+                "-Xfrontend",
+                "-load-plugin-executable",
+                "-Xfrontend",
+                "bazel-out/generated/macro",
+                "-parse-as-library",
+                "-application-extension",
+                "-static",
+                "-Xcc",
+                "-Os",
+                "-Xcc -DNDEBUG=1",
+                "-Xcc",
+                "-Wno-unused-variable",
+                "-Xcc",
+                "-Winit-self",
+                "-Xcc",
+                "-Wno-extra",
+                "Lib/Resources.swift",
+                "bazel-out/watchos-arm64_32-min7.0-applebin_watchos-watchos_arm64_32-opt-ST-c58d72818890/bin/Lib/Lib.swift",
+            ],
+            build_configuration = "Release",
+            diagnostics = _SCHEME_DIAGNOSTICS,
+        ),
+        test_action = xcode_schemes.test_action(
+            _TESTS["compiler_build_settings"],
+            diagnostics = _SCHEME_DIAGNOSTICS,
+        ),
+    ),
     xcode_schemes.scheme(
         name = "files_and_groups",
         launch_action = xcode_schemes.launch_action(
@@ -255,6 +363,9 @@ _XCODE_CONFIGURATIONS = {
 xcodeproj(
     name = "xcodeproj",
     associated_extra_files = {
+        "//tools/generators/compiler_build_settings": [
+            "//tools/generators/compiler_build_settings:README.md",
+        ],
         "//tools/generators/files_and_groups": [
             "//tools/generators/files_and_groups:README.md",
         ],

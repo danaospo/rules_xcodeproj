@@ -6,6 +6,7 @@ filegroup(
     name = "release_files",
     srcs = [
         # TODO: Uncomment when we start using the incremental generator
+        # "//" + package_name() + "/compiler_build_settings:release_files",
         # "//" + package_name() + "/files_and_groups:release_files",
         "//" + package_name() + "/legacy:release_files",
         # TODO: Uncomment when we start using the incremental generator
